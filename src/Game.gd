@@ -1,8 +1,6 @@
 extends Node2D
 
 const Dialogue = preload("res://scn/Dialogue.tscn")
-
-const TileSet = preload("res://res/new_tileset.tres")
 const Chest = preload("res://scn/Chest.tscn")
 
 const TileDef = "res://dat/tiles.json"
@@ -30,6 +28,8 @@ func read_json(file : String) -> JSONParseResult:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
+	
 	var tileDef = read_json(TileDef)
 	var roomDef = read_json(RoomDef)
 	

@@ -17,7 +17,12 @@ func _physics_process(_delta):
 	if Input.is_action_pressed("player_down"):
 		dir.y += 1
 	
-	var _velocity := move_and_slide(dir.normalized() * speed)
+	var velocity := move_and_slide(dir.normalized() * speed)
+	
+	if velocity.length_squared() <= 0.001:
+		$AnimationPlayer.stop()
+	else:
+		$AnimationPlayer.play("run_down")
 
 func _on_InteractionRange_body_entered(body):
 	if body.is_in_group("Interactable"):
