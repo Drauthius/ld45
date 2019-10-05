@@ -42,14 +42,16 @@ func set_dialogue(text : String, choices : Array):
 		var _ret = choice.connect("gui_input", self, "_handle_click", [ i + 1 ])
 		container.add_child(choice)
 
-func _unhandled_input(event):
-	if printing:
-		return
-	
-	if event is InputEventKey and event.pressed and event.scancode >= KEY_1 and event.scancode <= KEY_9:
-		var id : int = event.scancode - KEY_0
-		if id <= num_choices:
-			emit_signal("choice", id)
+func _unhandled_input(event):	
+	if event is InputEventKey and event.pressed:
+		if printing and event.scancode == KEY_ESCAPE or event.scancode == KEY_SPACE:
+			visibility_per_second = 1000.0
+			get_tree().set_input_as_handled()
+		elif event.scancode >= KEY_1 and event.scancode <= KEY_9:
+			var id : int = event.scancode - KEY_0
+			if id <= num_choices:
+				get_tree().set_input_as_handled()
+				emit_signal("choice", id)
 
 func _handle_click(event, id):
 	if printing:

@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/InteractableObject.gd" type="Script" id=1]
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform bool  enabled = false;
+uniform float outLineSize  = 0.04;
+uniform vec4  outLineColor = vec4(0.0, 0.0, 0.0, 1.0);
+
+void fragment()
+{
+    vec4 tcol = texture(TEXTURE, UV);
+
+    if (enabled && tcol.a == 0.0)
+    {
+        if (texture(TEXTURE, UV + vec2(0.0,          outLineSize)).a  != 0.0 ||
+            texture(TEXTURE, UV + vec2(0.0,         -outLineSize)).a  != 0.0 ||
+            texture(TEXTURE, UV + vec2(outLineSize,  0.0)).a          != 0.0 ||
+            texture(TEXTURE, UV + vec2(-outLineSize, 0.0)).a          != 0.0 ||
+            texture(TEXTURE, UV + vec2(-outLineSize, outLineSize)).a  != 0.0 ||
+            texture(TEXTURE, UV + vec2(-outLineSize, -outLineSize)).a != 0.0 ||
+            texture(TEXTURE, UV + vec2(outLineSize,  outLineSize)).a  != 0.0 ||
+            texture(TEXTURE, UV + vec2(outLineSize,  -outLineSize)).a != 0.0)
+            tcol = outLineColor;
+    }
+
+    COLOR = tcol;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 3 )
+shader_param/enabled = false
+shader_param/outLineSize = 0.04
+shader_param/outLineColor = Plane( 0, 0, 0, 1 )
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 16.0
+
+[node name="InteractableObject" type="StaticBody2D" groups=[
+"Interactable",
+]]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
