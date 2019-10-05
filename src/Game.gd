@@ -1,8 +1,13 @@
 extends Node2D
 
+const Dialogue = preload("res://scn/Dialogue.tscn")
+
 const TileSet = preload("res://res/new_tileset.tres")
 const TileDef = "res://dat/tiles.json"
 const RoomDef = "res://dat/rooms.json"
+
+onready var dialogue
+onready var paused := false
 
 func read_json(file : String) -> JSONParseResult:
 	var f := File.new()
@@ -33,7 +38,18 @@ func _ready():
 				def["tiles"][randi() % def["tiles"].size()],
 				true if def.has("flip_x") and def["flip_x"] and randf() < 0.5 else false,
 				true if def.has("flip_y") and def["flip_y"] and randf() < 0.5 else false)
+	
+	paused = true
+	dialogue = Dialogue.instance()
+	add_child(dialogue)
+	dialogue.set_dialogue("You seem to be stuck in this place. How about I let you out, and you give me something later?", [ "apa", "bepa" ])
+	var _ret = dialogue.connect("choice", self, "_on_choice")
 
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
+
+func _on_choice(id):
+	print(id)
+	remove_child(dialogue)
+	paused = false
