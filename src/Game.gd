@@ -33,14 +33,31 @@ func _ready():
 	var tileDef = read_json(TileDef)
 	var roomDef = read_json(RoomDef)
 	
-	for x in range(roomDef[0].size()):
-		for y in range(roomDef[0][x].size()):
-			var tile = roomDef[0][x][y]
+	for x in range(roomDef[0]["tiles"].size()):
+		for y in range(roomDef[0]["tiles"][x].size()):
+			var tile = roomDef[0]["tiles"][x][y]
 			var def = tileDef[int(tile)]
-			$TileMap.set_cell(y, x,
-				def["tiles"][randi() % def["tiles"].size()],
-				true if def.has("flip_x") and def["flip_x"] and randf() < 0.5 else false,
-				true if def.has("flip_y") and def["flip_y"] and randf() < 0.5 else false)
+			
+			if randf() < 0.1 and x > 0 and y > 0 and \
+			   typeof(roomDef[0]["tiles"][x][y]) != TYPE_STRING and roomDef[0]["tiles"][x][y] == 0 and \
+			   typeof(roomDef[0]["tiles"][x][y-1]) != TYPE_STRING and roomDef[0]["tiles"][x][y-1] == 0 and \
+			   typeof(roomDef[0]["tiles"][x-1][y]) != TYPE_STRING and roomDef[0]["tiles"][x-1][y] == 0 and \
+			   typeof(roomDef[0]["tiles"][x-1][y-1]) != TYPE_STRING and roomDef[0]["tiles"][x-1][y-1] == 0:
+				roomDef[0]["tiles"][x][y] = "H"
+				roomDef[0]["tiles"][x-1][y] = "H"
+				roomDef[0]["tiles"][x][y-1] = "H"
+				roomDef[0]["tiles"][x-1][y-1] = "H"
+				$TileMap.set_cell(y - 1, x - 1,
+					randi() % 2 + 12,
+					true if randf() < 0.5 else false)
+				$TileMap.set_cell(y - 1, x, -1)
+				$TileMap.set_cell(y, x - 1, -1)
+			else:
+				$TileMap.set_cell(y, x,
+					def["tiles"][randi() % def["tiles"].size()],
+					true if def.has("flip_x") and def["flip_x"] and randf() < 0.5 else false,
+					true if def.has("flip_y") and def["flip_y"] and randf() < 0.5 else false)
+			
 			if typeof(tile) == TYPE_STRING:
 				match tile:
 					"C":

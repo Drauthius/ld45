@@ -19,7 +19,8 @@ func _physics_process(_delta):
 	
 	var velocity := move_and_slide(dir.normalized() * speed)
 	
-	if velocity.length_squared() <= 0.001:
+	if velocity.length_squared() <= 0.001 and $AnimationPlayer.is_playing():
+		$AnimationPlayer.seek(0, true)
 		$AnimationPlayer.stop()
 	else:
 		$AnimationPlayer.play("run_down")
