@@ -4,7 +4,7 @@
 [ext_resource path="res://res/level1.tres" type="TileSet" id=2]
 [ext_resource path="res://scn/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scn/GUI.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scn/Enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scn/Blobber.tscn" type="PackedScene" id=5]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
@@ -19,6 +19,8 @@ position = Vector2( 273.024, 147.888 )
 
 [node name="GUI" parent="." instance=ExtResource( 4 )]
 
-[node name="Enemy" parent="." instance=ExtResource( 5 )]
-position = Vector2( 441.388, 260.51 )
+[node name="Blobber" parent="." groups=[
+"Living",
+] instance=ExtResource( 5 )]
+position = Vector2( 418.067, 220.125 )
 [connection signal="choice" from="GUI" to="." method="_on_GUI_choice"]

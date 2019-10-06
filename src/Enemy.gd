@@ -12,4 +12,8 @@ func _physics_process(delta):
 		return
 	
 	var direction : Vector2 = (target.position - position).normalized()
-	var _velocity = move_and_slide(direction * movement_speed)
+	facing = direction.angle() + PI
+	
+	var velocity = move_and_slide(direction * movement_speed)
+	
+	update_sprite(velocity.length_squared() <= 0.001)

@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scn/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://gfx/blobber-45.png" type="Texture" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "run_up"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ) ]
+}
+
+[node name="Blobber" index="0" instance=ExtResource( 1 )]
+movement_speed = 50.0
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 2 )
+hframes = 4
+frame = 3
+
+[node name="AnimationPlayer" parent="." index="2"]
+anims/run_down = SubResource( 1 )
+anims/run_left = SubResource( 1 )
+anims/run_right = SubResource( 1 )
+anims/run_up = SubResource( 1 )
