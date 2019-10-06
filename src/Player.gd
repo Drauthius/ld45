@@ -39,7 +39,7 @@ func _physics_process(_delta):
 	if dir.length_squared() != 0.0:
 		facing = dir.angle()
 	
-	var velocity := move_and_slide(dir.normalized() * speed)
+	var velocity := move_and_slide(dir.normalized() * movement_speed)
 	
 	if velocity.length_squared() <= 0.001 and $AnimationPlayer.is_playing():
 		$AnimationPlayer.seek(0, true)

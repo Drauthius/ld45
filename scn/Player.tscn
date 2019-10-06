@@ -26,7 +26,6 @@ tracks/0/keys = {
 
 [node name="Player" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-speed = 100.0
 max_health = 4
 
 [node name="Sprite" parent="." index="0"]
