@@ -46,5 +46,5 @@ margin_bottom = 34.0
 
 [node name="Description" type="Label" parent="PanelContainer/VBoxContainer"]
 margin_right = 964.0
-margin_bottom = 19.0
+margin_bottom = 24.0
 autowrap = true

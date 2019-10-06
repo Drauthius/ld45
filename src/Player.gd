@@ -2,6 +2,11 @@ extends "res://src/Character.gd"
 
 onready var interactable = null
 
+func _process(_delta):
+	if Input.is_action_just_pressed("player_interact") and interactable != null:
+		interactable.queue_free()
+		interactable = null
+
 func _physics_process(_delta):
 	if dead or $"..".paused:
 		return
