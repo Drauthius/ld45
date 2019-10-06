@@ -14,7 +14,7 @@ func _process(_delta):
 		return
 	
 	if Input.is_action_just_pressed("player_interact") and interactable != null:
-		interactable.queue_free()
+		interactable.interact()
 		interactable = null
 	
 	if Input.is_action_pressed("player_attack") and $AttackCooldown.is_stopped():

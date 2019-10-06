@@ -5,3 +5,6 @@ func _ready():
 
 func set_outline(enabled):
 	$Sprite.material.set_shader_param("enabled", enabled)
+
+func interact():
+	queue_free()
