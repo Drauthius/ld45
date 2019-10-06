@@ -30,3 +30,7 @@ shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/run_down = SubResource( 2 )
+
+[node name="AttackCooldown" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true

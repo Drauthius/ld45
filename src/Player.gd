@@ -1,11 +1,23 @@
 extends "res://src/Character.gd"
 
+const MeleeAttack = preload("res://scn/MeleeAttack.tscn")
+
 onready var interactable = null
 
 func _process(_delta):
+	if dead or $"..".paused:
+		return
+	
 	if Input.is_action_just_pressed("player_interact") and interactable != null:
 		interactable.queue_free()
 		interactable = null
+	
+	if Input.is_action_pressed("player_attack") and $AttackCooldown.is_stopped():
+		$AttackCooldown.start()
+		var attack := MeleeAttack.instance()
+		add_child(attack)
+		attack.rotation = facing
+		attack.position = Vector2(16, 0).rotated(facing)
 
 func _physics_process(_delta):
 	if dead or $"..".paused:
@@ -21,6 +33,9 @@ func _physics_process(_delta):
 		dir.y -= 1
 	if Input.is_action_pressed("player_down"):
 		dir.y += 1
+	
+	if dir.length_squared() != 0.0:
+		facing = dir.angle()
 	
 	var velocity := move_and_slide(dir.normalized() * speed)
 	
