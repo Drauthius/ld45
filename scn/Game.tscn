@@ -18,7 +18,10 @@ format = 1
 position = Vector2( 273.024, 147.888 )
 
 [node name="GUI" parent="." instance=ExtResource( 4 )]
+pause_mode = 2
 
 [node name="Blobber" parent="." instance=ExtResource( 5 )]
 position = Vector2( 418.067, 220.125 )
+[connection signal="death" from="Player" to="." method="_on_Player_death"]
+[connection signal="hit" from="Player" to="." method="_on_Player_hit"]
 [connection signal="choice" from="GUI" to="." method="_on_GUI_choice"]

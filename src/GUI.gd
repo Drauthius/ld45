@@ -14,7 +14,7 @@ onready var hearts = [
 	]
 onready var foodMeter = $MarginContainer/GridContainer/ProgressBar
 
-signal choice(id)
+signal choice(c)
 
 func add_dialogue(text, choices):
 	dialogue = Dialogue.instance()
@@ -34,7 +34,7 @@ func set_food(value):
 	else:
 		foodMeter.modulate = Color(1.0, 1.0, 1.0)
 
-func _on_choice(id):
+func _on_choice(c):
 	remove_child(dialogue)
 	dialogue = null
-	emit_signal("choice", id)
+	emit_signal("choice", c)

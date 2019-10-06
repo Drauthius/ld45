@@ -14,23 +14,35 @@ signal hit(character, amount)
 signal death(character)
 
 func take_damage(damage):
+	if $EffectPlayer.is_playing():
+		return
+	
 	damage = ConsequenceEngine.take_damage(damage, is_player)
 	
 	health = max(0, health - damage)
 	if health > 0:
 		emit_signal("hit", self, damage)
+		$EffectPlayer.play("damaged")
 	else:
 		dead = true
 		emit_signal("death", self)
-		queue_free()
+		if not is_player:
+			queue_free()
 
 func update_sprite(stopped):
+	if is_player and not $AttackCooldown.is_stopped():
+		stopped = false
+	
 	if stopped:
 		if $AnimationPlayer.is_playing():
+			$AnimationPlayer.current_animation.replace("attack_", "run_")
 			$AnimationPlayer.seek(0, true)
 			$AnimationPlayer.stop()
 	else:
 		var anim := "run_"
+		if is_player and not $AttackCooldown.is_stopped():
+			anim = "attack_"
+			
 		if facing > 5*QPI and facing < 7*QPI:
 			anim += "down"
 		elif facing > 3*QPI and facing < 5*QPI:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/Character.gd" type="Script" id=1]
 [ext_resource path="res://gfx/blobber-45.png" type="Texture" id=2]
@@ -83,6 +83,21 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 11, 12, 13, 14, 15 ]
 }
 
+[sub_resource type="Animation" id=6]
+resource_name = "damaged"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 6.4861e-09, 0.00182233, 0.00170029, 0.000205297, 4.16883e-05, 0.000370048, 0.00390625, 0.00142977, 0.000396607, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.482353 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.482353 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.482353 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.482353 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.482353 ), Color( 1, 1, 1, 1 ) ]
+}
+
 [node name="Character" type="KinematicBody2D" groups=[
 "Living",
 ]]
@@ -98,6 +113,9 @@ anims/run_down = SubResource( 2 )
 anims/run_left = SubResource( 3 )
 anims/run_right = SubResource( 4 )
 anims/run_up = SubResource( 5 )
+
+[node name="EffectPlayer" type="AnimationPlayer" parent="."]
+anims/damaged = SubResource( 6 )
 
 [node name="AttackCooldown" type="Timer" parent="."]
 wait_time = 0.4

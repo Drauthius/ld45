@@ -85,3 +85,6 @@ anims/run_down = SubResource( 1 )
 anims/run_left = SubResource( 2 )
 anims/run_right = SubResource( 3 )
 anims/run_up = SubResource( 4 )
+
+[node name="AttackCooldown" parent="." index="3"]
+wait_time = 2.0
