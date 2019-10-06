@@ -6,6 +6,9 @@ const MeleeAttack = preload("res://scn/MeleeAttack.tscn")
 
 onready var interactable = null
 
+func _ready():
+	is_player = true
+
 func _process(_delta):
 	if dead or $"..".paused:
 		return

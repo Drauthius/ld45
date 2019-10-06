@@ -28,6 +28,11 @@ func set_health(value):
 
 func set_food(value):
 	foodMeter.value = value
+	
+	if value <= 1.0:
+		foodMeter.modulate = Color(1.0, 0.2, 0.2)
+	else:
+		foodMeter.modulate = Color(1.0, 1.0, 1.0)
 
 func _on_choice(id):
 	remove_child(dialogue)

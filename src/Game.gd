@@ -73,7 +73,7 @@ func _process(delta):
 	if paused:
 		return
 	
-	$Player.food -= delta
+	$Player.food = max(0, $Player.food - delta)
 	$GUI.set_food($Player.food)
 
 func _unhandled_input(event):
