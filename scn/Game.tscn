@@ -19,8 +19,6 @@ position = Vector2( 273.024, 147.888 )
 
 [node name="GUI" parent="." instance=ExtResource( 4 )]
 
-[node name="Blobber" parent="." groups=[
-"Living",
-] instance=ExtResource( 5 )]
+[node name="Blobber" parent="." instance=ExtResource( 5 )]
 position = Vector2( 418.067, 220.125 )
 [connection signal="choice" from="GUI" to="." method="_on_GUI_choice"]
