@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Control
 
 export(float, 0.0, 100.0) var characters_per_second = 30.0
 

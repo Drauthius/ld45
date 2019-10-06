@@ -1,12 +1,10 @@
 extends Node2D
 
-const Dialogue = preload("res://scn/Dialogue.tscn")
 const Chest = preload("res://scn/Chest.tscn")
 
 const TileDef = "res://dat/tiles.json"
 const RoomDef = "res://dat/rooms.json"
 
-onready var dialogue
 onready var paused := false
 
 func read_json(file : String) -> JSONParseResult:
@@ -65,17 +63,23 @@ func _ready():
 						add_child(obj)
 						obj.position = $TileMap.map_to_world(Vector2(y, x)) + $TileMap.cell_size / 2
 	
+	$GUI.set_health($Player.health)
+	$GUI.set_food($Player.food)
+	
+	$GUI.add_dialogue("You seem to be stuck in this place. How about I let you out, and you give me something later?", [ "apa", "bepa" ])
 	paused = true
-	dialogue = Dialogue.instance()
-	add_child(dialogue)
-	dialogue.set_dialogue("You seem to be stuck in this place. How about I let you out, and you give me something later?", [ "apa", "bepa" ])
-	var _ret = dialogue.connect("choice", self, "_on_choice")
+
+func _process(delta):
+	if paused:
+		return
+	
+	$Player.food -= delta
+	$GUI.set_food($Player.food)
 
 func _unhandled_input(event):
 	if event is InputEventKey and event.pressed and event.scancode == KEY_ESCAPE:
 		get_tree().quit()
 
-func _on_choice(id):
+func _on_GUI_choice(id):
 	print(id)
-	remove_child(dialogue)
 	paused = false

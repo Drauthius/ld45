@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/Game.gd" type="Script" id=1]
 [ext_resource path="res://res/level1.tres" type="TileSet" id=2]
 [ext_resource path="res://scn/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scn/GUI.tscn" type="PackedScene" id=4]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
@@ -14,3 +15,6 @@ format = 1
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 273.024, 147.888 )
+
+[node name="GUI" parent="." instance=ExtResource( 4 )]
+[connection signal="choice" from="GUI" to="." method="_on_GUI_choice"]

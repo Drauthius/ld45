@@ -1,5 +1,7 @@
 extends "res://src/Character.gd"
 
+export(int, 1, 100) var food = 50
+
 const MeleeAttack = preload("res://scn/MeleeAttack.tscn")
 
 onready var interactable = null
