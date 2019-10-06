@@ -21,8 +21,8 @@ func _process(_delta):
 		$AttackCooldown.start()
 		var attack := MeleeAttack.instance()
 		add_child(attack)
-		attack.rotation = facing
-		attack.position = Vector2(16, 0).rotated(facing)
+		attack.rotation = facing - PI
+		attack.position = Vector2(16, 0).rotated(facing - PI)
 
 func _physics_process(_delta):
 	if dead or $"..".paused:
@@ -40,36 +40,37 @@ func _physics_process(_delta):
 		dir.y += 1
 	
 	if dir.length_squared() != 0.0:
-		facing = dir.angle()
+		facing = dir.angle() + PI
 	
 	var velocity := move_and_slide(dir.normalized() * movement_speed)
 	
-	if velocity.length_squared() <= 0.001 and $AnimationPlayer.is_playing():
-		$AnimationPlayer.seek(0, true)
-		$AnimationPlayer.stop()
-	else:
-		var deg = rad2deg(facing + PI/2)
-		var anim := "run_down"
-		if deg >= 337.5 or deg <= 22.5:
-			anim = "run_up"
-		elif deg >= 22.5 and deg <= 67.5:
-			anim = "run_upright"
-		elif deg >= 67.5 and deg <= 112.5:
-			anim = "run_right"
-		elif deg >= 112.5 and deg <= 157.5:
-			anim = "run_downright"
-		elif deg >= 157.5 and deg <= 202.5:
-			anim = "run_down"
-		elif deg >= 202.5 and deg <= 247.5:
-			anim = "run_downleft"
-		elif deg >= 247.5 and deg <= 292.5:
-			anim = "run_left"
-		else:
-			anim = "run_upleft"
-
-		if not $AnimationPlayer.has_animation(anim):
-			anim = "run_down"
-		$AnimationPlayer.play(anim)
+	update_sprite(velocity.length_squared() <= 0.001)
+#	if velocity.length_squared() <= 0.001 and $AnimationPlayer.is_playing():
+#		$AnimationPlayer.seek(0, true)
+#		$AnimationPlayer.stop()
+#	else:
+#		var deg = rad2deg(facing + PI/2)
+#		var anim := "run_down"
+#		if deg >= 337.5 or deg <= 22.5:
+#			anim = "run_up"
+#		elif deg >= 22.5 and deg <= 67.5:
+#			anim = "run_upright"
+#		elif deg >= 67.5 and deg <= 112.5:
+#			anim = "run_right"
+#		elif deg >= 112.5 and deg <= 157.5:
+#			anim = "run_downright"
+#		elif deg >= 157.5 and deg <= 202.5:
+#			anim = "run_down"
+#		elif deg >= 202.5 and deg <= 247.5:
+#			anim = "run_downleft"
+#		elif deg >= 247.5 and deg <= 292.5:
+#			anim = "run_left"
+#		else:
+#			anim = "run_upleft"
+#
+#		if not $AnimationPlayer.has_animation(anim):
+#			anim = "run_down"
+#		$AnimationPlayer.play(anim)
 
 func _on_InteractionRange_body_entered(body):
 	if body.is_in_group("Interactable"):
