@@ -72,13 +72,18 @@ tracks/0/keys = {
 "values": [ 4, 5, 6, 7 ]
 }
 
-[node name="Blobber" instance=ExtResource( 1 )]
+[node name="Blobber" index="0" instance=ExtResource( 1 )]
 movement_speed = 50.0
+detect_range = 120.0
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 2 )
 vframes = 4
 hframes = 4
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2( 0.0809937, 4.13072 )
+rotation = 1.5708
 
 [node name="AnimationPlayer" parent="." index="2"]
 anims/run_down = SubResource( 1 )
@@ -86,5 +91,5 @@ anims/run_left = SubResource( 2 )
 anims/run_right = SubResource( 3 )
 anims/run_up = SubResource( 4 )
 
-[node name="AttackCooldown" parent="." index="3"]
+[node name="AttackCooldown" parent="." index="4"]
 wait_time = 2.0

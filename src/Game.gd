@@ -5,6 +5,7 @@ const Choice = preload("res://src/Choice.gd")
 func _ready():
 	randomize()
 	
+	ConsequenceEngine.reset()
 	LevelGenerator.new().fill(self, $TileMap, 1)
 	
 	for child in get_children():
@@ -45,9 +46,11 @@ func _on_GUI_choice(choice):
 
 func _on_Player_hit(_character, _amount):
 	$GUI.set_health($Player.health)
+	SoundService.play("hit")
 
 func _on_Player_death(_character):
 	$GUI.set_health($Player.health)
+	SoundService.play("dead")
 	$GUI.add_dialogue("Oh my. You seem to have died. Care to try again?",
 		[ Choice.new("Yes", Choice.Result.RESTART), Choice.new("No", Choice.Result.QUIT) ])
 	get_tree().paused = true

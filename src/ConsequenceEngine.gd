@@ -5,11 +5,14 @@ var Choice = load("res://src/Choice.gd")
 onready var consequences = {}
 
 func _ready():
-	for consequence in Choice.Consequence.values():
-		consequences[consequence] = 0
+	reset()
 
 func add_consequence(consequence : int):
 	consequences[consequence] += 1
+
+func reset():
+	for consequence in Choice.Consequence.values():
+		consequences[consequence] = 0
 
 func take_damage(damage, is_player):
 	if is_player and consequences[Choice.Consequence.EXTRA_DAMAGE]:

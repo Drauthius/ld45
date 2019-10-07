@@ -47,7 +47,7 @@ func _unhandled_input(event):
 		if printing and event.scancode == KEY_ESCAPE or event.scancode == KEY_SPACE:
 			visibility_per_second = 1000.0
 			get_tree().set_input_as_handled()
-		elif event.scancode >= KEY_1 and event.scancode <= KEY_9:
+		elif not printing and event.scancode >= KEY_1 and event.scancode <= KEY_9:
 			var id : int = event.scancode - KEY_0
 			if id <= choices.size():
 				get_tree().set_input_as_handled()
