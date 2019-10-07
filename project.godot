@@ -33,6 +33,7 @@ config/icon="res://gfx/icon.png"
 [autoload]
 
 ConsequenceEngine="*res://src/ConsequenceEngine.gd"
+SoundService="*res://src/SoundService.gd"
 
 [importer_defaults]
 
