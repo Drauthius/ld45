@@ -136,7 +136,7 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 11, 12, 13, 14, 15 ]
 }
 
-[node name="Player" instance=ExtResource( 1 )]
+[node name="Player" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 max_health = 4
 
@@ -146,6 +146,7 @@ vframes = 32
 hframes = 8
 
 [node name="Camera2D" type="Camera2D" parent="." index="2"]
+pause_mode = 2
 current = true
 zoom = Vector2( 0.5, 0.5 )
 smoothing_enabled = true

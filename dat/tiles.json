@@ -21,10 +21,14 @@
 	},
 	"pit": {
 		"size": 4,
+		"flip_x": true,
+		"flip_y": false,
 		"tiles": [ 12 ]
 	},
 	"puddle": {
 		"size": 4,
+		"flip_x": true,
+		"flip_y": false,
 		"tiles": [ 13 ]
 	}
 }
