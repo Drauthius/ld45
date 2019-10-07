@@ -9,6 +9,7 @@ var sfx = {
 }
 
 onready var interactable = null
+onready var can_attack := false
 
 func _ready():
 	is_player = true
@@ -24,7 +25,7 @@ func _process(_delta):
 		interactable.interact()
 		interactable = null
 	
-	if Input.is_action_pressed("player_attack") and $AttackCooldown.is_stopped():
+	if can_attack and Input.is_action_pressed("player_attack") and $AttackCooldown.is_stopped():
 		$AttackCooldown.start()
 		sfx.weapon_swing.play()
 		var attack := MeleeAttack.instance()

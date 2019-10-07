@@ -54,18 +54,18 @@ func fill(game : Node, _tilemap : TileMap, level : int) -> void:
 			map[room.x] = {}
 		map[room.x][room.y] = dir
 		
-		for i in range(randi() % 2 + 1):
+		for _i in range(randi() % 2 + 1):
 			_add_tile(room, tileDefs["puddle"], occupied)
 		
-		for i in range(randi() % 2):
+		for _i in range(randi() % 2):
 			_add_tile(room, tileDefs["pit"], occupied)
 		
-		for i in range(randi() % 4 + 1):
+		for _i in range(randi() % 4 + 1):
 			var obj = _add_object(room, Enemies[randi() % Enemies.size()], occupied)
 			if obj:
 				game.add_child(obj)
 		
-		for i in range(randi() % 2):
+		for _i in range(randi() % 2):
 			var obj = _add_object(room, Chest, occupied)
 			if obj:
 				game.add_child(obj)

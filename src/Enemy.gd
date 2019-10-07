@@ -5,10 +5,23 @@ export(float, 1.0, 1000.0) var detect_range := 150.0
 onready var target = $"../Player"
 onready var detect_range_squared = detect_range * detect_range
 
-func _physics_process(delta):
+enum State { IDLE, CHASING }
+onready var state = State.IDLE
+
+signal lockedon
+
+func _process(_delta):
 	if dead:
 		return
-	elif position.distance_squared_to(target.position) > detect_range_squared:
+	
+	if state == State.IDLE and position.distance_squared_to(target.position) <= detect_range_squared:
+		state = State.CHASING
+		emit_signal("lockedon")
+
+func _physics_process(_delta):
+	if dead:
+		return
+	elif state == State.IDLE:
 		return
 	elif not $AttackCooldown.is_stopped():
 		return
@@ -16,7 +29,7 @@ func _physics_process(delta):
 	var direction : Vector2 = (target.position - position).normalized()
 	facing = direction.angle() + PI
 	
-	var velocity = move_and_slide(direction * movement_speed)
+	var _velocity = move_and_slide(direction * movement_speed)
 	
 	update_sprite(false) #velocity.length_squared() <= 0.001)
 	
