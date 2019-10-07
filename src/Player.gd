@@ -1,5 +1,6 @@
 extends "res://src/Character.gd"
 
+# warning-ignore:unused_class_variable
 export(int, 1, 100) var food = 50
 
 const MeleeAttack = preload("res://scn/MeleeAttack.tscn")
@@ -30,8 +31,9 @@ func _process(_delta):
 		sfx.weapon_swing.play()
 		var attack := MeleeAttack.instance()
 		add_child(attack)
-		attack.rotation = facing - PI
-		attack.position = Vector2(16, 0).rotated(facing - PI)
+		#attack.rotation = facing - PI
+		#attack.position = Vector2(16, 0).rotated(facing - PI)
+		attack.set_animation(_get_direction_string())
 
 func _physics_process(_delta):
 	if dead:

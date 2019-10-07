@@ -2,8 +2,8 @@ extends Area2D
 
 export(int, 1, 100) var damage := 1
 
-func _ready():
-	$AnimationPlayer.play("default")
+func set_animation(direction):
+	$AnimationPlayer.play("swing_" + direction)
 
 func _on_AnimationPlayer_animation_finished(_anim_name):
 	queue_free()

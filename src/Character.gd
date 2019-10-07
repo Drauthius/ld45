@@ -45,14 +45,15 @@ func update_sprite(stopped):
 		var anim := "run_"
 		if is_player and not $AttackCooldown.is_stopped():
 			anim = "attack_"
-			
-		if facing > 5*QPI and facing < 7*QPI:
-			anim += "down"
-		elif facing > 3*QPI and facing < 5*QPI:
-			anim += "right"
-		elif facing > QPI and facing < 3*QPI:
-			anim += "up"
-		else:
-			anim += "left"
-		#print(facing, " -> ", anim)
-		$AnimationPlayer.play(anim)
+		
+		$AnimationPlayer.play(anim + _get_direction_string())
+
+func _get_direction_string() -> String:
+	if facing > 5*QPI and facing < 7*QPI:
+		return "down"
+	elif facing > 3*QPI and facing < 5*QPI:
+		return "right"
+	elif facing > QPI and facing < 3*QPI:
+		return "up"
+	else:
+		return "left"

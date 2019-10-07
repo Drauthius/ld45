@@ -4,7 +4,7 @@
 [ext_resource path="res://src/Enemy.gd" type="Script" id=2]
 [ext_resource path="res://gfx/heart-empty-icon.png" type="Texture" id=3]
 
-[node name="Enemy" index="0" groups=[
+[node name="Enemy" groups=[
 "Enemy",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
