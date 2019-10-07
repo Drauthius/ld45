@@ -4,8 +4,9 @@
 [ext_resource path="res://src/Player.gd" type="Script" id=2]
 [ext_resource path="res://gfx/player.png" type="Texture" id=3]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 20.0
+[sub_resource type="CapsuleShape2D" id=10]
+radius = 8.85159
+height = 8.17409
 
 [sub_resource type="Animation" id=2]
 resource_name = "attack_down"
@@ -145,6 +146,10 @@ texture = ExtResource( 3 )
 vframes = 32
 hframes = 8
 
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2( 0, 11 )
+rotation = 1.5708
+
 [node name="Camera2D" type="Camera2D" parent="." index="2"]
 pause_mode = 2
 current = true
@@ -155,7 +160,9 @@ smoothing_speed = 10.0
 [node name="InteractionRange" type="Area2D" parent="." index="3"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionRange" index="0"]
-shape = SubResource( 1 )
+position = Vector2( 0, 11 )
+rotation = 1.5708
+shape = SubResource( 10 )
 
 [node name="AnimationPlayer" parent="." index="4"]
 anims/attack_down = SubResource( 2 )
