@@ -1,28 +1,30 @@
-[
-	{
-		"description": "ground",
+{
+	"ground": {
 		"tiles": [ 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 11 ],
 		"flip_x": true,
 		"flip_y": false
 	},
-	{
-		"description": "top-wall",
+	"top-wall": {
 		"tiles": [ 1, 1, 1, 1, 3, 4 ]
 	},
-	{
-		"description": "topleft-wall",
+	"topleft-wall": {
 		"tiles": [ 0 ]
 	},
-	{
-		"description": "topright-wall",
+	"topright-wall": {
 		"tiles": [ 4 ]
 	},
-	{
-		"description": "left-wall",
+	"side-wall": {
 		"tiles": [ 9 ]
 	},
-	{
-		"description": "top-wall",
+	"bottom-wall": {
 		"tiles": [ 10 ]
+	},
+	"pit": {
+		"size": 4,
+		"tiles": [ 12 ]
+	},
+	"puddle": {
+		"size": 4,
+		"tiles": [ 13 ]
 	}
-]
+}
