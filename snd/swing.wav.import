@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/swing.wav-a7390c9eb08b6e15d832b2a057016327.sample"
+
+[deps]
+
+source_file="res://snd/swing.wav"
+dest_files=[ "res://.import/swing.wav-a7390c9eb08b6e15d832b2a057016327.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

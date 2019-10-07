@@ -4,10 +4,17 @@ export(int, 1, 100) var food = 50
 
 const MeleeAttack = preload("res://scn/MeleeAttack.tscn")
 
+var sfx = {
+	"weapon_swing": AudioStreamPlayer.new(),
+}
+
 onready var interactable = null
 
 func _ready():
 	is_player = true
+	sfx.weapon_swing.stream = preload("res://snd/swing.wav")
+	for key in sfx:
+		add_child(sfx[key])
 
 func _process(_delta):
 	if dead:
@@ -19,6 +26,7 @@ func _process(_delta):
 	
 	if Input.is_action_pressed("player_attack") and $AttackCooldown.is_stopped():
 		$AttackCooldown.start()
+		sfx.weapon_swing.play()
 		var attack := MeleeAttack.instance()
 		add_child(attack)
 		attack.rotation = facing - PI
