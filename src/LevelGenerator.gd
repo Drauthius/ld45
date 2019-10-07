@@ -4,6 +4,7 @@ class_name LevelGenerator
 const TileDefinition = "res://dat/tiles.json"
 
 const Chest = preload("res://scn/Chest.tscn")
+const Stairs = preload("res://scn/Stairs.tscn")
 const Enemies = [
 	preload("res://scn/Blobber.tscn")
 ]
@@ -71,6 +72,9 @@ func fill(game : Node, _tilemap : TileMap, level : int) -> void:
 				game.add_child(obj)
 		
 		if open.size() == 0:
+			var obj = _add_object(room, Stairs, occupied)
+			if obj:
+				game.add_child(obj)
 			break
 		
 		dir = open[randi() % open.size()]

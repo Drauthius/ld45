@@ -16,6 +16,7 @@ format = 1
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 160.971, 118.31 )
+z_index = 1
 
 [node name="GUI" parent="." instance=ExtResource( 4 )]
 pause_mode = 2
