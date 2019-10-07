@@ -60,6 +60,16 @@ func fill(game : Node, _tilemap : TileMap, level : int) -> void:
 		for i in range(randi() % 2):
 			_add_tile(room, tileDefs["pit"], occupied)
 		
+		for i in range(randi() % 4 + 1):
+			var obj = _add_object(room, Enemies[randi() % Enemies.size()], occupied)
+			if obj:
+				game.add_child(obj)
+		
+		for i in range(randi() % 2):
+			var obj = _add_object(room, Chest, occupied)
+			if obj:
+				game.add_child(obj)
+		
 		if open.size() == 0:
 			break
 		
@@ -170,6 +180,19 @@ func _add_tile(room : Vector2, tileDef, occupied : Dictionary):
 			_clear_cell(x+1, y+1)
 			_set_cell(x, y, tileDef)
 			return
+
+func _add_object(room : Vector2, Obj, occupied : Dictionary) -> Node:
+	for _attempt in range(1000):
+		var x : int = int((room.x * Size.w) + randi() % (Size.w - 1))
+		var y : int = int((room.y * Size.h) + randi() % (Size.h - 1))
+		
+		if not occupied[x][y]:
+			occupied[x][y] = true
+			var object = Obj.instance()
+			object.position = tilemap.map_to_world(Vector2(x, y)) + tilemap.cell_size / 2
+			return object
+	
+	return null
 
 func _read_json(file : String) -> JSONParseResult:
 	var f := File.new()

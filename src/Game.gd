@@ -38,5 +38,6 @@ func _on_Player_hit(_character, _amount):
 	$GUI.set_health($Player.health)
 
 func _on_Player_death(_character):
+	$GUI.set_health($Player.health)
 	$GUI.add_dialogue("Oh my. You seem to have died. Care to try again?", [ Choice.new("Yes", Choice.Result.RESTART), Choice.new("No", Choice.Result.QUIT) ])
 	get_tree().paused = true
