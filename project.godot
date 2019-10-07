@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "Choice",
 "language": "GDScript",
 "path": "res://src/Choice.gd"
+}, {
+"base": "Node",
+"class": "LevelGenerator",
+"language": "GDScript",
+"path": "res://src/LevelGenerator.gd"
 } ]
 _global_script_class_icons={
-"Choice": ""
+"Choice": "",
+"LevelGenerator": ""
 }
 
 [application]
