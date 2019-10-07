@@ -4,6 +4,9 @@ class_name LevelGenerator
 const TileDefinition = "res://dat/tiles.json"
 
 const Chest = preload("res://scn/Chest.tscn")
+const Enemies = [
+	preload("res://scn/Blobber.tscn")
+]
 
 const Size = { w = 12, h = 8 }
 
@@ -14,7 +17,7 @@ var tileDefs
 var map := {}
 var path := []
 
-func fill(node, _tilemap, _level):
+func fill(game : Node, _tilemap : TileMap, level : int) -> void:
 	tilemap = _tilemap
 	tileDefs = _read_json(TileDefinition)
 
@@ -24,16 +27,48 @@ func fill(node, _tilemap, _level):
 	map[room.x][room.y] = dir
 	
 	# warning-ignore:return_value_discarded
-	_create_room(dir, 0, room)
+	_create_room(dir, 0, room, {})
 	path.append(room)
+	
+	var player := game.get_node("Player")
+	player.position = tilemap.cell_size * Vector2(Size.w, Size.h) / 2
+	
+	if level == 1:
+		var cage := Sprite.new()
+		cage.texture = preload("res://gfx/prison.png")
+		cage.hframes = 2
+		cage.position = player.position - Vector2(0, 2)
+		cage.name = "Cage"
+		game.add_child(cage)
 	
 	while true:
 		room = _translate(room, dir)
 		dir = _flip(dir)
 		
+		var occupied = {}
 		var num_exits = 1 if path.size() < 4 else 0
-		var open = _create_room(dir, num_exits, room)
+		var open = _create_room(dir, num_exits, room, occupied)
 		path.append(room)
+		
+		if not map.has(room.x):
+			map[room.x] = {}
+		map[room.x][room.y] = dir
+		
+		for i in range(randi() % 2 + 1):
+			_add_tile(room, tileDefs["puddle"], occupied)
+		
+		for i in range(randi() % 2):
+			_add_tile(room, tileDefs["pit"], occupied)
+		
+		for i in range(randi() % 4 + 1):
+			var obj = _add_object(room, Enemies[randi() % Enemies.size()], occupied)
+			if obj:
+				game.add_child(obj)
+		
+		for i in range(randi() % 2):
+			var obj = _add_object(room, Chest, occupied)
+			if obj:
+				game.add_child(obj)
 		
 		if open.size() == 0:
 			break
@@ -55,7 +90,7 @@ func _flip(dir : int) -> int:
 		Direction.DOWN: return Direction.UP
 
 # warning-ignore:unused_argument
-func _create_room(from : int, num_open : int, room : Vector2) -> Array:
+func _create_room(from : int, num_open : int, room : Vector2, occupied : Dictionary) -> Array:
 	var available = []
 	for dir in Direction.values():
 		var r = _translate(room, dir)
@@ -100,8 +135,14 @@ func _create_room(from : int, num_open : int, room : Vector2) -> Array:
 	
 	for ox in range(x, x + Size.w):
 		for oy in range(y, y + Size.h):
+			if not occupied.has(ox):
+				occupied[ox] = {}
+			
 			if _get_cell(ox, oy) == -1:
 				_set_cell(ox, oy, tileDefs["ground"])
+				occupied[ox][oy] = false
+			else:
+				occupied[ox][oy] = true
 	
 	var dirs = []
 	for dir in open.keys():
@@ -109,50 +150,49 @@ func _create_room(from : int, num_open : int, room : Vector2) -> Array:
 			dirs.append(dir)
 	return dirs
 
-func _get_cell(x, y):
-	return tilemap.get_cell(x, y) #y, x)
+func _get_cell(x : int, y : int) -> int:
+	return tilemap.get_cell(x, y)
 
 func _set_cell(x, y, tileDef):
-	tilemap.set_cell(x, y, #y, x,
+	tilemap.set_cell(x, y,
 		tileDef["tiles"][randi() % tileDef["tiles"].size()],
 		tileDef.has("flip_x") and tileDef["flip_x"] and randf() < 0.5,
 		tileDef.has("flip_y") and tileDef["flip_y"] and randf() < 0.5)
 
-#func fill(node, tilemap, _level):
-#	var tileDef = read_json(TileDefinition)
-#	var roomDef = read_json(RoomDefinition)
-#
-#	for x in range(roomDef[0]["tiles"].size()):
-#		for y in range(roomDef[0]["tiles"][x].size()):
-#			var tile = roomDef[0]["tiles"][x][y]
-#			var def = tileDef[int(tile)]
-#
-#			if randf() < 0.1 and x > 0 and y > 0 and \
-#			   typeof(roomDef[0]["tiles"][x][y]) != TYPE_STRING and roomDef[0]["tiles"][x][y] == 0 and \
-#			   typeof(roomDef[0]["tiles"][x][y-1]) != TYPE_STRING and roomDef[0]["tiles"][x][y-1] == 0 and \
-#			   typeof(roomDef[0]["tiles"][x-1][y]) != TYPE_STRING and roomDef[0]["tiles"][x-1][y] == 0 and \
-#			   typeof(roomDef[0]["tiles"][x-1][y-1]) != TYPE_STRING and roomDef[0]["tiles"][x-1][y-1] == 0:
-#				roomDef[0]["tiles"][x][y] = "H"
-#				roomDef[0]["tiles"][x-1][y] = "H"
-#				roomDef[0]["tiles"][x][y-1] = "H"
-#				roomDef[0]["tiles"][x-1][y-1] = "H"
-#				tilemap.set_cell(y - 1, x - 1,
-#					randi() % 2 + 12,
-#					true if randf() < 0.5 else false)
-#				tilemap.set_cell(y - 1, x, -1)
-#				tilemap.set_cell(y, x - 1, -1)
-#			else:
-#				tilemap.set_cell(y, x,
-#					def["tiles"][randi() % def["tiles"].size()],
-#					true if def.has("flip_x") and def["flip_x"] and randf() < 0.5 else false,
-#					true if def.has("flip_y") and def["flip_y"] and randf() < 0.5 else false)
-#
-#			if typeof(tile) == TYPE_STRING:
-#				match tile:
-#					"C":
-#						var obj := Chest.instance()
-#						node.add_child(obj)
-#						obj.position = tilemap.map_to_world(Vector2(y, x)) + tilemap.cell_size / 2
+func _clear_cell(x, y):
+	tilemap.set_cell(x, y, -1)
+
+func _add_tile(room : Vector2, tileDef, occupied : Dictionary):
+	assert(tileDef["size"] == 4)
+	
+	for _attempt in range(1000):
+		var x : int = int((room.x * Size.w) + randi() % (Size.w - 1))
+		var y : int = int((room.y * Size.h) + randi() % (Size.h - 1))
+		
+		if not occupied[x][y] and not occupied[x+1][y] and not occupied[x][y+1] and not occupied[x+1][y+1]:
+			occupied[x][y] = true
+			occupied[x+1][y] = true
+			occupied[x][y+1] = true
+			occupied[x+1][y+1] = true
+			_clear_cell(x, y)
+			_clear_cell(x+1, y)
+			_clear_cell(x, y+1)
+			_clear_cell(x+1, y+1)
+			_set_cell(x, y, tileDef)
+			return
+
+func _add_object(room : Vector2, Obj, occupied : Dictionary) -> Node:
+	for _attempt in range(1000):
+		var x : int = int((room.x * Size.w) + randi() % (Size.w - 1))
+		var y : int = int((room.y * Size.h) + randi() % (Size.h - 1))
+		
+		if not occupied[x][y]:
+			occupied[x][y] = true
+			var object = Obj.instance()
+			object.position = tilemap.map_to_world(Vector2(x, y)) + tilemap.cell_size / 2
+			return object
+	
+	return null
 
 func _read_json(file : String) -> JSONParseResult:
 	var f := File.new()

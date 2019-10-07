@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+# warning-ignore:unused_class_variable
 export(float, 0.1, 100.0) var movement_speed = 100.0
 export(int, 1, 100) var max_health = 1
 
@@ -19,6 +20,7 @@ func take_damage(damage):
 	
 	damage = ConsequenceEngine.take_damage(damage, is_player)
 	
+	# warning-ignore:narrowing_conversion
 	health = max(0, health - damage)
 	if health > 0:
 		emit_signal("hit", self, damage)
@@ -29,6 +31,7 @@ func take_damage(damage):
 		if not is_player:
 			queue_free()
 
+# warning-ignore:unused_argument
 func update_sprite(stopped):
 	if is_player and not $AttackCooldown.is_stopped():
 		stopped = false

@@ -2,6 +2,7 @@
 class_name Choice
 
 enum Result {
+	BREAK_OUT,
 	NOOP,
 	RESTART,
 	QUIT
