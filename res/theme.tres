@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=5 format=2]
 
-[ext_resource path="res://ttf/BMarmy.TTF" type="DynamicFontData" id=1]
+[ext_resource path="res://ttf/EnchantedSword.ttf" type="DynamicFontData" id=1]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.184314, 0.184314, 0.184314, 0.384314 )
@@ -23,7 +23,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [sub_resource type="DynamicFont" id=3]
-size = 24
+size = 32
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 1 )
 

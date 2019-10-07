@@ -9,7 +9,7 @@ height = 12.6532
 
 [sub_resource type="Animation" id=2]
 resource_name = "default"
-length = 0.4
+length = 0.35
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -49,7 +49,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "swing_left"
-length = 0.4
+length = 0.35
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -89,7 +89,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "swing_right"
-length = 0.4
+length = 0.35
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -129,7 +129,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=5]
 resource_name = "swing_up"
-length = 0.4
+length = 0.35
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
